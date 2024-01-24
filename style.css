@@ -1,0 +1,48 @@
+@font-face {
+    font-family: 'FiraFont';
+    font-weight: normal;
+    src: url('font/FiraCodeNerdFont-Regular.ttf'),
+}
+@font-face {
+    font-family: 'FiraFont';
+    font-weight: bold;
+    src: url('font/FiraCodeNerdFont-Bold.ttf'),
+}
+@font-face {
+    font-family: 'FiraFontLight';
+    src: url('font/FiraCodeNerdFont-Light.ttf');
+}
+
+.accentBright{
+    color: #F5BDE6;
+}
+
+.lightText{
+    font-family: 'FiraFontLight';
+}
+
+
+.boxcontainer{
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    display: flex;
+}
+
+.box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+body{
+    font-family: 'FiraFont', sans-serif;
+    background-color: #24273A;
+    color: #CAD3F5;
+}
+
+h1{
+    font-size: medium;
+}
+
