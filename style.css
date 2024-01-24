@@ -1,3 +1,7 @@
+:root{
+    --main-text: #CAD3F5;
+}
+
 @font-face {
     font-family: 'FiraFont';
     font-weight: normal;
@@ -17,8 +21,28 @@
     color: #F5BDE6;
 }
 
+.accentGreen{
+    color: #A6DA95;
+}
+
+.accentCyan{
+    color: #8BD5CA;
+}
+
+.accentYellow{
+    color: #EED49F;
+}
+
+.accentBlue{
+    color: #8AADF4;
+}
+
 .lightText{
     font-family: 'FiraFontLight';
+}
+
+.command{
+    padding: 10px;
 }
 
 
@@ -27,6 +51,8 @@
     flex-wrap: wrap;
     justify-content: space-around;
     display: flex;
+    justify-content: flex-start;
+    max-width: 80%;
 }
 
 .box {
@@ -34,15 +60,56 @@
     align-items: center;
     justify-content: center;
     text-align: center;
+    min-width: 100px;
+    min-height: 20%;
   }
 
 body{
     font-family: 'FiraFont', sans-serif;
-    background-color: #24273A;
-    color: #CAD3F5;
+    background-color: #171421;
+    color: var(--main-text);
 }
 
-h1{
-    font-size: medium;
+.terminal{
+    position: absolute;
+    background-color: #24273A;
+    width: 60%;
+    height: 50%;
+    border-radius: 10px;
+    left: 20%;
+    top: 20%;
+}
+
+.terminalHeader{
+    background-color: #494D64;
+    text-anchor: middle;
+    z-index: 10;
+    cursor: move;
+    width: 100%;
+    height: 30px;
+    border-radius: 10px 10px 0px 0px;
+}
+
+
+a:link {
+    color: var(--main-text);
+    text-decoration-line: none;
+}
+  
+
+a:visited {
+    color: var(--main-text);
+    text-decoration-line: none;
+}
+  
+a:hover {
+    color: var(--main-text);
+    text-decoration-line: none;
+}
+  
+
+a:active {
+    color: var(--main-text);
+    text-decoration-line: none;
 }
 
