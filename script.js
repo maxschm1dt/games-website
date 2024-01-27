@@ -9,6 +9,7 @@ isMouseDown = false;
 var terminalContent = "";
 var terminal = "";
 var terminalHead = "";
+var emptyCommand = "";
 
 function onMouseDown(e) {
   isMouseDown = true;
@@ -61,13 +62,24 @@ async function setUpTerminalHead(){
   xhr.send();
 }
 
+async function setUpEmptyCommand(){
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", 'terminal/emptyCommand.html', true);
+  xhr.onreadystatechange = (e) => {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      emptyCommand = xhr.responseText;
+    }
+  };
+  xhr.send();
+}
+
 function loadContentIntoTerminal(content) {
   var xhr = new XMLHttpRequest();
   xhr.open("GET", content, true);
   xhr.onreadystatechange = (e) => {
     if (xhr.readyState === 4 && xhr.status === 200) {
       terminalContent += xhr.responseText;
-      document.getElementById("targetDiv").innerHTML = terminalHead + terminalContent;
+      document.getElementById("targetDiv").innerHTML = terminalHead + terminalContent + emptyCommand;
       //re add the eventListeners
       addEventListeners();
     }
@@ -77,7 +89,10 @@ function loadContentIntoTerminal(content) {
 
 //load the initial content to the terminal
 document.addEventListener("DOMContentLoaded", (e) => {
-  setUpTerminal().then(setUpTerminalHead).then( (e) => {
+  setUpTerminal()
+  .then(setUpTerminalHead)
+  .then(setUpEmptyCommand)
+  .then( (e) => {
     loadContentIntoTerminal("list.html");
   })
 });
