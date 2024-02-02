@@ -80,6 +80,7 @@ html{
 
 *{
     margin: 0;
+    
 }
 
 .bg-image{
@@ -100,6 +101,8 @@ html{
     left: 20%;
     top: 20%;
     overflow: hidden;
+    scrollbar-width: 0px;
+    scrollbar-color: transparent transparent;
     border: solid;
     border-width: 3px;
     border-color: #2a1534af;
@@ -145,4 +148,29 @@ a:active {
 
 r{
     color: rebeccapurple;
+}
+
+input{
+    background-color: transparent;
+    font-family: FiraFont;
+    font-size: medium;
+    color: #A6DA95;
+    border: transparent;
+}
+
+input::placeholder{
+    color: var(--main-text);
+}
+input:focus{
+    border-color: transparent;
+    outline: none;
+}
+
+button{
+    background-color: transparent;
+    border: transparent;
+    font-family: FiraFont;
+    color: #8AADF4;
+    font-size: medium;
+    cursor: pointer;
 }
