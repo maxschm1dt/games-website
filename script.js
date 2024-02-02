@@ -65,13 +65,13 @@ function addEventListeners() {
 }
 
 function wordleReload() {
-	var inputStringGreen = String(document.getElementById("wordleGreenLetters").value);
+	var inputStringGreen = String(document.getElementById("wordleGreenLetters").value).toUpperCase();
 	let resultArrayGreen = inputStringGreen.split(/\|/);
 	resultArrayGreen = resultArrayGreen.map(element => element.trim());
 
 
-	var inputStringYellow = String(document.getElementById("wordleYellowLetters").value);
-	var inputStringNot = String(document.getElementById("wordleUnusedLetters").value);
+	var inputStringYellow = String(document.getElementById("wordleYellowLetters").value).toUpperCase();
+	var inputStringNot = String(document.getElementById("wordleUnusedLetters").value).toUpperCase();
 	
 	let resultArrayYellow = inputStringYellow.split('').filter(char => char.trim() !== '');
 	let resultArrayNot = inputStringNot.split('').filter(char => char.trim() !== '');
