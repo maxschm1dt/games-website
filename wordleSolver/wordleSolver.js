@@ -48,7 +48,7 @@ export function getWords(green, yellow, not){
         
         var possibleWords = words;
 
-        if(words.length > 5){
+        if(words.length > 23){
             possibleWords = words.length;
         }
         updateWordleWords(wordWithTopLetters, possibleWords)

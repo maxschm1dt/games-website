@@ -80,7 +80,7 @@ function wordleReload() {
 }
 
 export function updateWordleWords(best, possible) {
-	document.getElementById('wordlePossibleWords').innerHTML = ' possible words: ' + possible;
+	document.getElementById('wordlePossibleWords').innerHTML = ' some possible words: ' + possible;
 	document.getElementById('wordleBestWord').innerHTML = ' best next word: ' + best;
 }
 
