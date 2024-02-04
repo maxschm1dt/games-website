@@ -121,8 +121,6 @@ function findWordWithTopLetters(wordList, topLetters) {
         if (wordLetterCount > mostLettersCount) {
             mostLettersCount = wordLetterCount;
             wordWithMostLetters = word;
-            console.log(wordLetterCount)
-            console.log(word);
         }
     });
 

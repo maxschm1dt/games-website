@@ -87,8 +87,6 @@ function wordleReload() {
     .split("")
     .filter((char) => char.trim() !== "");
 
-	console.log(resultArrayYellow);
-
   getWords(resultArrayGreen, resultArrayYellow, resultArrayNot);
 }
 
