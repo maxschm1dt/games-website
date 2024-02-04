@@ -12,10 +12,19 @@ export function getWords(green, yellow, not){
             words = words.filter(a => !a.includes(c));
         });
 
+
+        let yellowFlat = yellow.join('').split('');
         //filter words that include used letters
-        yellow.forEach(c => {
+        yellowFlat.forEach(c => {
             words = words.filter(a => a.includes(c));
         });
+
+        //filter words with yellow letters at the wrong spot
+        for (let index = 0; index < yellow.length; index++) {
+            const element = yellow[index];
+            words = words.filter(c => !element.includes(c.charAt(index)));
+        }
+
 
         //filter words that don't have the right letter at the right spot
         for (let index = 0; index < green.length; index++) {
@@ -43,15 +52,13 @@ export function getWords(green, yellow, not){
         }
 
         let top5Letters = topLettersByIndex(scores);
+        console.log(top5Letters);
 
         let wordWithTopLetters = findWordWithTopLetters(words, top5Letters);
         
         var possibleWords = words;
 
-        if(words.length > 23){
-            possibleWords = words.length;
-        }
-        updateWordleWords(wordWithTopLetters, possibleWords)
+        updateWordleWords(wordWithTopLetters, words)
     });
 }
 
@@ -78,7 +85,7 @@ function countLettersInWords(wordList, excluded) {
 
 function topLettersByIndex(letterCounts) {
     // Create an array of objects where each object contains the letter and its count
-    let lettersWithCounts = letterCounts.map((count, index) => ({ letter: String.fromCharCode('a'.charCodeAt(0) + index), count }));
+    let lettersWithCounts = letterCounts.map((count, index) => ({ letter: String.fromCharCode('a'.charCodeAt(0) + index).toUpperCase(), count }));
 
     // Sort the array in descending order based on the count
     lettersWithCounts.sort((a, b) => b.count - a.count);
@@ -92,6 +99,7 @@ function topLettersByIndex(letterCounts) {
 function findWordWithTopLetters(wordList, topLetters) {
     let mostLettersCount = 0;
     let wordWithMostLetters = '';
+    let usedLetters = [''];
 
     // Iterate through each word in the list
     wordList.forEach(word => {
@@ -99,18 +107,22 @@ function findWordWithTopLetters(wordList, topLetters) {
 
         // Iterate through each letter in the word
         for (let i = 0; i < word.length; i++) {
-            let letter = word[i].toLowerCase(); // Convert to lowercase for case-insensitive counting
+            let letter = word[i]; // Convert to lowercase for case-insensitive counting
 
             // Check if the letter is one of the top letters
-            if (topLetters.some(topLetter => topLetter.letter === letter)) {
+            if (topLetters.some(topLetter => topLetter.letter === letter) && !usedLetters.includes(letter)) {
                 wordLetterCount++;
+                usedLetters.push(letter);
             }
         }
+        usedLetters = [''];
 
         // Update the word with the most letters if applicable
         if (wordLetterCount > mostLettersCount) {
             mostLettersCount = wordLetterCount;
             wordWithMostLetters = word;
+            console.log(wordLetterCount)
+            console.log(word);
         }
     });
 

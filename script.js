@@ -14,6 +14,7 @@ var terminalContent = "";
 var terminal = "";
 var terminalHead = "";
 var emptyCommand = "";
+var spacer = "";
 
 function onMouseDown(e) {
   isMouseDown = true;
@@ -37,27 +38,27 @@ function onMouseUp(e) {
 
 function addEventListeners() {
   draggableDiv = document.getElementById("drag");
-  wordleButton = document.getElementById("wordleButton");
+  wordleButton = [...document.getElementsByName("wordleButton")].pop();
   draggableDiv.addEventListener("mousedown", onMouseDown);
   document.addEventListener("mousemove", onMouseMove);
   document.addEventListener("mouseup", onMouseUp);
 
   if (wordleButton != null) {
     wordleButton.addEventListener("click", (e) => {
-      loadContentExclusiveIntoTerminal("wordleSolver/index.html");
+      loadContentIntoTerminal("wordleSolver/index.html");
       wordleLoaded = true;
     });
   }
 
   if (wordleLoaded) {
-    document
-      .getElementById("wordleExitButton")
+    [...document.getElementsByName("wordleExitButton")]
+      .pop()
       .addEventListener("click", (e) => {
         loadContentIntoTerminal("list/list.html");
         wordleLoaded = false;
       });
-    document
-      .getElementById("wordleReloadButton")
+    [...document.getElementsByName("wordleReloadButton")]
+      .pop()
       .addEventListener("click", (e) => {
         wordleReload();
       });
@@ -65,23 +66,38 @@ function addEventListeners() {
 }
 
 function wordleReload() {
-	var inputStringGreen = String(document.getElementById("wordleGreenLetters").value).toUpperCase();
-	let resultArrayGreen = inputStringGreen.split(/\|/);
-	resultArrayGreen = resultArrayGreen.map(element => element.trim());
+  var inputStringGreen = String(
+    [...document.getElementsByName("wordleGreenLetters")].pop().value
+  ).toUpperCase();
+  let resultArrayGreen = inputStringGreen.split(/\|/);
+  resultArrayGreen = resultArrayGreen.map((element) => element.trim());
 
+  var inputStringYellow = String(
+    [...document.getElementsByName("wordleYellowLetters")].pop().value
+  ).toUpperCase();
+  var inputStringNot = String(
+    [...document.getElementsByName("wordleUnusedLetters")].pop().value
+  ).toUpperCase();
 
-	var inputStringYellow = String(document.getElementById("wordleYellowLetters").value).toUpperCase();
-	var inputStringNot = String(document.getElementById("wordleUnusedLetters").value).toUpperCase();
-	
-	let resultArrayYellow = inputStringYellow.split('').filter(char => char.trim() !== '');
-	let resultArrayNot = inputStringNot.split('').filter(char => char.trim() !== '');
+  let resultArrayYellow = inputStringYellow
+    .split(/\|/);
+	resultArrayYellow = resultArrayYellow.map((element) => element.trim());
 
-	getWords(resultArrayGreen, resultArrayYellow, resultArrayNot);
+  let resultArrayNot = inputStringNot
+    .split("")
+    .filter((char) => char.trim() !== "");
+
+	console.log(resultArrayYellow);
+
+  getWords(resultArrayGreen, resultArrayYellow, resultArrayNot);
 }
 
 export function updateWordleWords(best, possible) {
-	document.getElementById('wordlePossibleWords').innerHTML = ' some possible words: ' + possible;
-	document.getElementById('wordleBestWord').innerHTML = ' best next word: ' + best;
+	var words = [...possible].slice(0, 10);
+  [...document.getElementsByName("wordlePossibleWords")].pop().innerHTML =
+    " " + words.length + " of " + [...possible].length + " possible words: "+ words;
+  [...document.getElementsByName("wordleBestWord")].pop().innerHTML =
+    " best next word: " + best;
 }
 
 async function setUpTerminal() {
@@ -91,6 +107,18 @@ async function setUpTerminal() {
     if (xhr.readyState === 4 && xhr.status === 200) {
       terminal += xhr.responseText;
       document.getElementById("body").innerHTML += terminal;
+    }
+  };
+  xhr.send();
+}
+
+async function setUpTerminalSpacer() {
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", "terminal/spacer.html", true);
+  xhr.onreadystatechange = (e) => {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      spacer = xhr.responseText;
+      document.getElementById("targetDiv").innerHTML += spacer;
     }
   };
   xhr.send();
@@ -125,10 +153,12 @@ function loadContentIntoTerminal(content) {
   xhr.onreadystatechange = (e) => {
     if (xhr.readyState === 4 && xhr.status === 200) {
       terminalContent += xhr.responseText;
-      document.getElementById("targetDiv").innerHTML =
-        terminalHead + terminalContent + emptyCommand;
+      var targetDiv = document.getElementById("targetDiv");
+      targetDiv.innerHTML =
+        terminalHead + spacer + terminalContent + emptyCommand;
       //re add the eventListeners
       addEventListeners();
+      targetDiv.scrollTop = targetDiv.scrollHeight;
     }
   };
   xhr.send();
@@ -153,6 +183,7 @@ function loadContentExclusiveIntoTerminal(content) {
 document.addEventListener("DOMContentLoaded", (e) => {
   setUpTerminal()
     .then(setUpTerminalHead)
+    .then(setUpTerminalSpacer)
     .then(setUpEmptyCommand)
     .then((e) => {
       loadContentIntoTerminal("list/list.html");

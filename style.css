@@ -100,24 +100,36 @@ html{
     border-radius: 10px;
     left: 20%;
     top: 20%;
-    overflow: hidden;
-    scrollbar-width: 0px;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    flex-direction: column-reverse;
+    -ms-overflow-style: none;
     scrollbar-color: transparent transparent;
     border: solid;
     border-width: 3px;
     border-color: #2a1534af;
 }
 
+.terminal:-webkit-scrollbar {
+    display: none;
+  }
+
 .terminalHeader{
     background-color: #2a1534af;
     text-anchor: middle;
     z-index: 10;
     cursor: move;
-    width: 100%;
+    width: 60%;
     height: 30px;
     border-radius: 10px 10px 0px 0px;
     align-items: center;
     display: flex;
+    position: fixed;
+}
+
+.spacer{
+    background: transparent;
+    height: 30px;
 }
 
 
