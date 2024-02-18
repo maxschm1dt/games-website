@@ -1,4 +1,4 @@
-import data from "./landkreise_simplify200.geojson" assert { type: "json" };
+import data from "./landkreise_simplify200.json" assert { type: "json" };
 
 var map = L.map("map").setView([49.79258938006419, 9.932129693357913], 13);
 
